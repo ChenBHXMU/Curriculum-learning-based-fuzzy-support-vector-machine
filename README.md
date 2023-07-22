@@ -13,3 +13,5 @@ The relevant papers are as follows:
 
 1.Wu Y, Liu Y. Adaptively weighted large margin classifiers[J]. Journal of Computational and Graphical Statistics, 2013, 22(2): 416-432.
 2.Batuwita R, Palade V. FSVM-CIL: fuzzy support vector machines for class imbalance learning[J]. IEEE Transactions on Fuzzy Systems, 2010, 18(3): 558-571.
+2.Batuwita R, Palade V. FSVM-CIL: fuzzy support vector machines for class imbalance learning[J]. IEEE Transactions on Fuzzy Systems, 2010, 18(3): 558-571.
+3.Liu J. Fuzzy support vector machine for imbalanced data with borderline noise[J]. Fuzzy Sets and Systems, 2021, 413: 64-73.
