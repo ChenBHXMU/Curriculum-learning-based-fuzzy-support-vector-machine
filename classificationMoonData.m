@@ -1,7 +1,7 @@
 function classificationMoonData()
 [X,y] = moon();
 
-kertype = 'rbf'; %hermite
+kertype = 'rbf'; %rbf or linear or hermite
 C = 100;
 isOneVone = 1;
 [Acc1,SVs,preY,trainTime,testTime,proList,svm1,maxLabel]  = svmTrain_multiclss(X',y',X',y',kertype,C,isOneVone);
