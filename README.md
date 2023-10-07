@@ -1,5 +1,5 @@
 # Curriculum-learning-based-fuzzy-support-vector-machine
-Curriculum learning-based fuzzy support vector machine
+Chen B, Gao Y, Liu J, et al. Curriculum learning-based fuzzy support vector machine[J]. IEEE Transactions on Fuzzy Systems, 2023.
 
 **Parameter settings:**
 item =20; 
