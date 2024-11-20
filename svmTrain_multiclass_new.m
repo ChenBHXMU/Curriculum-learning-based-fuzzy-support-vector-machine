@@ -5,7 +5,7 @@ function [Acc,SVs,preY,trainTime,testTime,lossList,svm,maxLabel,objFuc,AccTrain,
    para = 1; 
 %end
 
-SVs = 0;%支持向量个数
+SVs = 0;%脰搂鲁脰脧貌脕驴赂枚脢媒
 class = unique(trainLabel);
 nuclass = length(class);
 trainTime = 0;
@@ -78,7 +78,8 @@ if(nuclass == 2)
         w2 = norm(svm.w,2)^2;
         softloss = di.*ei';
         lossList(i) = sum(ei);
-        objFuc(i) = 0.5*w2 + C * sum(softloss);
+        %objFuc(i) = 0.5*w2 + C * sum(softloss);
+        objFuc(i) = getObjFun(a,trainData,trainLabel,kertype,C,softloss);
         R1 = svmTest(svm, trainData, kertype);  
         AccTrain(i) = size(find(trainLabel==R1.Y))/size(trainLabel);
         maxLabel =trainLabel.*R1.score;
@@ -127,7 +128,7 @@ if(nuclass == 2)
     preY(1,indPreYmax) = max(class);
 
     
-    %得到精度
+    %碌脙碌陆戮芦露脠
     Acc = size(find(preY==testLabel))/size(testLabel);
     %Acc = Gmean(preY,testLabel);
     result = svmTest(svm, testData, kertype);  
