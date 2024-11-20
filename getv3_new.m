@@ -1,20 +1,14 @@
-function [d] = getv3_new(M,para)
-%����f=2/(1+exp(belt*xi))
-%belt=0.5
-para = 0.5;
-if para == 0
-    para = 0.5;
+function [d] = getv3_new(M, para)
+    % getv3_new 计算 d，其中 d(i) = 2/(1 + exp(para * M(i)))
+    % M - 输入矩阵或向量
+    % para - 参数值，默认为 0.5
+    
+    if nargin < 2 || para == 0
+        para = 0.5;  % 如果 para 没有指定或为 0，默认为 0.5
+    end
+    
+    % 矢量化计算，直接对整个矩阵/向量 M 进行操作
+    d = 2 ./ (1 + exp(para * M(:)));
+    % d = d';
 end
-[n,m] = size(M);
-d = ones(m,1);
-%[nL,mL] = find(M>0.00001);
-mi = length(M);
-mL = [1:mi];
-for i = 1:mi
-    indj = mL(i);
-    dis1 = M(indj);
-    %d(indj,1) = 2/(1+exp(0.8*dis1));
-    d(indj,1) = 2/(1+exp(para*dis1));
-    %d(indj,1) = 2/(1+exp(0.1*dis1));
-end
-end
+
