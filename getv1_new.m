@@ -1,14 +1,7 @@
 function [d] = getv1_new(M)
-%����f=1/(1+|xi|)
-%belt=0.5
-[n,m] = size(M);
-d = ones(m,1);
-%[nL,mL] = find(M>0.00001);
-mi = length(M);
-mL = [1:mi];
-for i = 1:mi
-    indj = mL(i);
-    dis1 = M(indj);
-    d(indj,1) = 1/(1+abs(dis1));
+    % d = ones(length(M),1);
+    % 计算f=1/(1+|xi|)
+    d = 1 ./ (1 + abs(M)); % 直接计算 d，矢量化操作
+    d = d';
 end
-end
+
