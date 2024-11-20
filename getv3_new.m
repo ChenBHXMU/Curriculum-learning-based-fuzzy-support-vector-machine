@@ -11,4 +11,3 @@ function [d] = getv3_new(M, para)
     d = 2 ./ (1 + exp(para * M(:)));
     % d = d';
 end
-
