@@ -1,22 +1,15 @@
-function [d] = getv4_new(M,para)
-%����f=exp(-xi^2/2))
-para = 0;
-para2 = 2;
-% if para == 0
-%     para = 0;
-%     para2 = 2;
-% end
-
-[n,m] = size(M);
-d = ones(m,1);
-%[nL,mL] = find(M>0.00001);
-mi = length(M);
-mL = [1:mi];
-for i = 1:mi
-    indj = mL(i);
-    dis1 = M(indj);
-    %d(indj,1) = exp(-dis1^2/2); $0808
-    d(indj,1) = exp(-(dis1-para)^2/(para2));
-    %d(indj,1) = exp(-2.*(dis1)^2); %0422
-end
+function [d] = getv4_new(M, para)
+    % getv4_new 计算 d，其中 d(i) = exp(-((M(i) - para)^2 / 2))
+    % M - 输入矩阵或向量
+    % para - 参数值，默认为 0
+    
+    % if nargin < 2
+    %     para = 0;  % 如果 para 没有指定，默认为 0
+    % end
+    para = 0;
+    para2 = 2;  % 固定参数 para2 为 2
+    
+    % 矢量化计算，直接对整个矩阵/向量 M 进行操作
+    d = exp(-((M(:) - para).^2) / para2);
+    % d = d';
 end
