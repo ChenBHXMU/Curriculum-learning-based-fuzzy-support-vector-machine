@@ -1,12 +1,12 @@
 function [Acc,SVs,preY,trainTime,testTime,proList,svm,maxLabel,objFuc] = onevone(trainData,trainLabel,testData,testLabel,nuclass,class,kertype,C,type,isCluster,item,para)
-%Ö§³Ö¶à·ÖÀà
+%æ”¯æŒå¤šåˆ†ç±»
 
 %     struct SVM;
 epsilon = 1e-6;
 nn = 0;
 [~,nTrain] = size(trainData);
 [mTest,nTest] = size(testData);
-svsList = zeros(nTrain,1); %ÓÃÀ´¼ÇÂ¼Ö§³ÖÏòÁ¿µÄ¸öÊı£¬·Ç0¼´Ö§³ÖÏòÁ¿
+svsList = zeros(nTrain,1); %ç”¨æ¥è®°å½•æ”¯æŒå‘é‡çš„ä¸ªæ•°ï¼Œé0å³æ”¯æŒå‘é‡
 trainTime = 0;
 testTime = 0;
 testYList = zeros(nuclass,nTest);
@@ -21,8 +21,8 @@ for ii = 0:nuclass-2
         iindex = find(trainLabel==iclass);
         %one v one
         jindex = find(trainLabel==jclass);
-        itrainLabel = trainLabel(iindex) - trainLabel(iindex) + 1;%oneÎª1
-        jtrainLabel = trainLabel(jindex) - trainLabel(jindex) - 1;%othersÎª-1        
+        itrainLabel = trainLabel(iindex) - trainLabel(iindex) + 1;%oneä¸º1
+        jtrainLabel = trainLabel(jindex) - trainLabel(jindex) - 1;%othersä¸º-1        
         pN = length(iindex); nN = length(jindex);
 
         if isCluster
@@ -32,8 +32,8 @@ for ii = 0:nuclass-2
             [clustLabel1] = dbscan(itrainData',kertype);
             [clustLabel2] = dbscan(jtrainData',kertype);
             ijtrainData = [trainData(:,iindex(clustLabel1==1)),trainData(:,jindex(clustLabel2==1))];
-            itrainLabel = trainLabel(iindex(clustLabel1==1)) - trainLabel(iindex(clustLabel1==1)) + 1;%oneÎª1
-            jtrainLabel = trainLabel(jindex(clustLabel2==1)) - trainLabel(jindex(clustLabel2==1)) - 1;%AllÎª-1
+            itrainLabel = trainLabel(iindex(clustLabel1==1)) - trainLabel(iindex(clustLabel1==1)) + 1;%oneä¸º1
+            jtrainLabel = trainLabel(jindex(clustLabel2==1)) - trainLabel(jindex(clustLabel2==1)) - 1;%Allä¸º-1
             ijtrainLabel = [itrainLabel,jtrainLabel];
         else
             itrainData = trainData(:,iindex);
@@ -58,12 +58,12 @@ for ii = 0:nuclass-2
         a0=zeros(n,1);
         
         [a,fval,eXitflag,output,lambda]=quadprog(H,f,A,b,Aeq,beq,lb,ub,a0,options);
-        %Çób
+        %æ±‚b
         [svm,sv_label] = calculate_rho(a,ijtrainData',ijtrainLabel',C,kertype);
         
         if isCluster
-            itrainLabel = trainLabel(iindex) - trainLabel(iindex) + 1;%oneÎª1
-            jtrainLabel = trainLabel(jindex) - trainLabel(jindex) - 1;%AllÎª-1
+            itrainLabel = trainLabel(iindex) - trainLabel(iindex) + 1;%oneä¸º1
+            jtrainLabel = trainLabel(jindex) - trainLabel(jindex) - 1;%Allä¸º-1
             itrainData = trainData(:,iindex);
             jtrainData = trainData(:,jindex);
             ijtrainLabel = [itrainLabel,jtrainLabel];
@@ -90,8 +90,8 @@ for ii = 0:nuclass-2
             %converage
             w2 = norm(svm.w,2)^2;
             softloss = di.*ei';
-            objFuc(i) = 0.5*w2 + C * sum(softloss);
-            
+            %objFuc(i) = 0.5*w2 + C * sum(softloss);
+            objFuc(i) = getObjFun(a,trainData,trainLabel,kertype,C,softloss);
             if(item == 1)
                 break;
             end
@@ -115,7 +115,7 @@ for ii = 0:nuclass-2
             end
         end
         
-        svsList(sv_label(:,:))=1;%µ¥´ÎÖ§³ÖÏòÁ¿
+        svsList(sv_label(:,:))=1;%å•æ¬¡æ”¯æŒå‘é‡
         trainTime = trainTime + toc;
         tic;
         result=svmTest_multiclass(svm,testData,kertype);
@@ -128,7 +128,7 @@ for ii = 0:nuclass-2
     end
     [maxLabel,maxIndex] = max(testYList);
     testY = class(maxIndex);
-    %µÃµ½¾«¶È
+    %å¾—åˆ°ç²¾åº¦
     preY = testY;
     Acc = size(find(testLabel==preY))/size(testLabel);
     %Acc = Gmean(preY,testLabel);
